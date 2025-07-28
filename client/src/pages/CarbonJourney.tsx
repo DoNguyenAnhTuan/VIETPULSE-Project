@@ -214,287 +214,142 @@ const CarbonJourney = () => {
       }
     };
   }, []);
+  
 
   return (
     <div className="flex flex-col p-4 md:p-6 space-y-8 h-screen overflow-y-auto bg-gray-50">
       
-
-      {/* Site selector dropdown */}
-      <div className="relative mx-auto md:mx-0">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            {/* <button 
-              className="flex items-center justify-between w-48 md:w-64 px-4 py-2" 
-              style={{ backgroundColor: '#002855', color: 'white', borderRadius: '0.375rem' }}
-            >
-              <span>{selectedSite}</span>
-              <FaChevronDown className="ml-2 h-4 w-4" />
-            </button> */}
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-48 md:w-64">
-            <DropdownMenuItem onClick={() => setSelectedSite("ALL SITES")}>
-              ALL SITES
-            </DropdownMenuItem>
-            {sites?.map((site) => (
-              <DropdownMenuItem 
-                key={site.id} 
-                onClick={() => setSelectedSite(site.name)}
-              >
-                {site.name}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-
-      {/* Header */}
-      <div id="about" className="text-center max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold" style={{ color: '#002855' }}>About the Carbon Intensity API</h1>
-        <p className="text-gray-600 text-lg mt-4 leading-relaxed">
-          NESO's Carbon Intensity API provides an indicative trend of regional carbon intensity of the electricity system in Great Britain (GB) 96+ hours ahead of real-time. It provides programmatic and timely access to both forecast and estimated carbon intensity data.
-        </p>
-        
-        {/* Icons */}
-        <div className="flex justify-center space-x-8 mt-8">
-          {[FaFire, FaMobileAlt, FaWind, FaRadiation, FaChartLine, FaWater, FaCar].map((Icon, index) => (
-            <div key={index} className="p-4" style={{ backgroundColor: 'rgba(0, 40, 85, 0.1)', borderRadius: '50%' }}>
-              <Icon className="w-6 h-6" style={{ color: '#002855' }} />
-            </div>
-          ))}
-        </div>
-
-        <p className="text-gray-600 mt-8 leading-relaxed">
-          The Carbon Intensity forecast includes CO<sub>2</sub> emissions related to electricity generation only.
-          This includes emissions from all large metered power stations, interconnector imports,
-          transmission and distribution losses, and accounts for national electricity demand,
-          embedded wind and solar generation.
-        </p>
-      </div>
-
-      {/* Current Carbon Intensity */}
-      <div className="bg-white shadow rounded-lg p-6 text-center max-w-4xl mx-auto">
-        <p className="text-sm font-semibold uppercase text-gray-500 mb-2">Current Carbon Intensity</p>
-        <h2 className="text-5xl font-bold" style={{ color: '#B38E5D' }}>
-          {typeof window !== 'undefined' && window.energyTotalConsumptionMWh
-            ? (parseFloat(window.energyTotalConsumptionMWh) * 0.6592).toFixed(2)
-            : '...'} <span className="text-xl font-medium text-gray-700">gCO₂/kWh</span>
-        </h2>
-      </div>
-
-      {/* 2-Day Forecast */}
-      <div className="bg-white shadow rounded-lg p-6 max-w-4xl mx-auto">
-        <p className="text-sm font-semibold uppercase text-gray-500 mb-4">3-Month Carbon Intensity Forecast</p>
-        <p className="text-sm text-gray-500 mb-6">Values are the predicted Carbon Intensity in tons CO₂ for each day</p>
-
-        <div className="space-y-4">
-          {forecastData.length === 0 ? (
-            <div className="text-gray-400 text-center">No forecast data available.</div>
-          ) : (
-            forecastData.map((item) => (
-              <div key={item.label} className="flex justify-between items-center border-b pb-2">
-                <span className="text-md font-medium text-gray-700">{item.label}</span>
-                <div className="flex space-x-6 font-semibold">
-                  <span className="text-red-500 flex items-center">
-                    <svg width="16" height="16" fill="currentColor" className="mr-1" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                    </svg>
-                    {item.max}
-                  </span>
-                  <span className="text-green-600 flex items-center">
-                    <svg width="16" height="16" fill="currentColor" className="mr-1" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    {item.min}
-                  </span>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-
-      {/* National Data */}
-      <div id="national" className="max-w-4xl mx-auto w-full">
-        <h2 className="text-3xl font-bold text-center mb-6" style={{ color: '#002855' }}>National Data</h2>
-        <p className="text-gray-600 text-center mb-4">
-          The carbon intensity of electricity is a measure of how much CO<sub>2</sub> emissions are produced per kilowatt hour of electricity consumed.
-        </p>
-        <p className="text-gray-600 text-center mb-8">
-          The 'actual' value (orange line) is the estimated carbon intensity from metered generation.
-          The 'forecast' value (blue line) is our forecast. Carbon intensity varies by hour, day, and season
-          due to changes in electricity demand and generation mix.
-        </p>
-
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          {/* <h3 className="text-lg font-semibold mb-4">Carbon Intensity Forecast (-24hrs to +48hrs)</h3>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={mockChartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                <XAxis 
-                  dataKey="time" 
-                  label={{ value: 'Time (Local Time)', position: 'bottom' }}
-                  tick={{ fill: '#6B7280' }}
-                />
-                <YAxis 
-                  label={{ 
-                    value: 'Carbon Intensity (gCO₂/kWh)', 
-                    angle: -90, 
-                    position: 'left' 
-                  }}
-                  tick={{ fill: '#6B7280' }}
-                />
-                <Tooltip />
-                <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="actual" 
-                  stroke="#B38E5D" 
-                  name="Actual"
-                  strokeWidth={2}
-                  dot={false}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="forecast" 
-                  stroke="#002855" 
-                  name="Forecast"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div> */}
-
-          {/* Carbon Forecast Chart */}
-          <div className="mt-8">
-            <h3 className="text-lg font-semibold mb-4">Carbon Forecast (Next 7 Days)</h3>
-            <div className="h-[500px] w-full border rounded-lg overflow-hidden">
-              <iframe 
-                key={forecastKey}
-                src="/forecast.html" 
-                className="w-full h-full"
-                frameBorder="0"
-                title="Carbon Forecast Chart"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Generation Mix */}
-      <div id="generation" className="max-w-4xl mx-auto w-full">
-        <h2 className="text-3xl font-bold text-center mb-6" style={{ color: '#002855' }}>Current GB Generation Mix</h2>
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={generationMixData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(1)}%`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {generationMixData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="grid grid-cols-2 gap-4 content-center">
-              {generationMixData.map((item) => (
-                <div key={item.name} className="flex items-center space-x-2">
-                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: item.color }}></div>
-                  <span className="text-gray-700 capitalize">{item.name}: {item.value}%</span>
-                </div>
-              ))}
-            </div>
-          </div> */}
-
-          {/* Power Sources Chart */}
-          <div className="mt-8">
-            {/* <h3 className="text-lg font-semibold mb-4">Vietnam Power Sources</h3> */}
-            <div className="h-[500px] w-full border rounded-lg overflow-hidden">
-              <iframe 
-                key={forecastKey}
-                src="/power_sources.html" 
-                className="w-full h-full"
-                frameBorder="0"
-                title="Power Sources Chart"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Examples */}
-      <div id="examples" className="max-w-4xl mx-auto w-full">
-        <h2 className="text-3xl font-bold text-center mb-6" style={{ color: '#002855' }}>Examples</h2>
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <p className="text-gray-600 text-center mb-8">
-            WWF have implemented the API into a re-usable widget that can help people plan their
-            energy use, switching devices on when energy is green and off when it's not.
+      {/* Main grid for cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
+        {/* About Card */}
+        <div id="about" className="text-center bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center min-h-[320px] h-full">
+          <h1 className="text-2xl font-extrabold mb-2" style={{ color: '#002855' }}>About the Carbon Intensity API</h1>
+          <p className="text-gray-600 text-base mt-2 leading-relaxed">
+            EIU Carbon Intensity API cung cấp xu hướng cường độ carbon của hệ thống điện Việt Nam trước thời gian thực. API này cho phép truy cập lập trình và kịp thời cả dữ liệu dự báo và ước tính cường độ carbon.
           </p>
-          <div className="grid grid-cols-6 gap-2 text-center">
-            {[
-              { time: "8am - 10am", level: "H", bg: "bg-gray-100" },
-              { time: "10am - 12pm", level: "M", bg: "bg-gray-100" },
-              { time: "12pm - 2pm", level: "M", bg: "bg-green-100", action: "Plug in" },
-              { time: "2pm - 4pm", level: "M", bg: "bg-gray-100" },
-              { time: "4pm - 6pm", level: "H", bg: "bg-gray-100" },
-              { time: "6pm - 8pm", level: "H", bg: "bg-red-100", action: "Unplug" },
-            ].map((slot, index) => (
-              <div key={index} className={`p-4 ${slot.bg} rounded-lg`}>
-                <div className="text-sm font-medium mb-2">{slot.time}</div>
-                <div className={`inline-flex items-center justify-center w-8 h-8 rounded-full ${
-                  slot.level === "H" ? "bg-orange-100 text-orange-600" :
-                  slot.level === "M" ? "bg-yellow-100 text-yellow-600" :
-                  "bg-green-100 text-green-600"
-                }`}>
-                  {slot.level}
-                </div>
-                {slot.action && (
-                  <div className={`mt-2 text-xs font-medium ${
-                    slot.action === "Plug in" ? "text-green-600" : "text-red-600"
-                  }`}>
-                    {slot.action}
-                  </div>
-                )}
+          <div className="flex justify-center space-x-3 mt-4">
+            {[FaFire, FaMobileAlt, FaWind, FaRadiation, FaChartLine, FaWater, FaCar].map((Icon, index) => (
+              <div key={index} className="p-2 bg-primary/10 rounded-full flex items-center justify-center shadow-sm">
+                <Icon className="w-5 h-5 text-primary" />
               </div>
             ))}
           </div>
-          <div className="mt-4 text-center text-sm text-gray-500">
-            VH = Very high carbon, H = High carbon, M = Moderate, L = Low carbon, VL = Very low carbon
+          <p className="text-gray-600 mt-4 text-sm">
+            Dự báo chỉ bao gồm phát thải CO<sub>2</sub> liên quan đến sản xuất điện: các nhà máy lớn, nhập khẩu, tổn thất truyền tải/phân phối, nhu cầu điện quốc gia, điện gió và mặt trời phân tán.
+          </p>
+        </div>
+
+        {/* Current Carbon Intensity Card */}
+        <div className="bg-gradient-to-br from-[#f7ecd7] to-[#f3f6fa] shadow-2xl rounded-2xl p-6 flex flex-col items-center border border-[#e5e7eb] min-h-[320px] h-full text-center">
+          <div className="flex flex-col items-center w-full">
+            <h2 className="text-2xl font-extrabold mb-2" style={{ color: '#B38E5D' }}>Current Carbon Intensity</h2>
+            <span className="inline-flex items-center justify-center rounded-full bg-[#f3e6c6] p-3 shadow-md mb-4">
+              <FaChartLine className="text-3xl text-[#B38E5D]" />
+            </span>
+          </div>
+          <h2 className="text-5xl font-extrabold mb-2 mt-2 flex items-end justify-center" style={{ color: '#B38E5D', minHeight: '56px' }}>
+            {typeof window !== 'undefined' && window.energyTotalConsumptionMWh
+              ? (parseFloat(window.energyTotalConsumptionMWh) * 0.6592).toFixed(2)
+              : '...'}
+            <span className="text-xl font-medium text-gray-700 ml-2 mb-1">gCO₂/kWh</span>
+          </h2>
+          <div className="text-gray-500 text-sm mt-2 text-center">Tính toán dựa trên tổng tiêu thụ điện hiện tại</div>
+        </div>
+
+        {/* 3-Month Forecast Card */}
+        <div className="bg-white shadow-xl rounded-2xl p-6 border border-[#e5e7eb] flex flex-col min-h-[320px] h-full items-center justify-center text-center">
+          <h2 className="text-2xl font-extrabold mb-2" style={{ color: '#002855' }}>3-Month Carbon Intensity Forecast</h2>
+          <p className="text-xs text-gray-500 mb-4">Giá trị dự báo cường độ carbon (tấn CO₂/ngày)</p>
+          <div className="flex-1 w-full flex flex-col items-center justify-center">
+            {forecastData.length === 0 ? (
+              <div className="text-gray-400 text-center">No forecast data available.</div>
+            ) : (
+              forecastData.map((item) => (
+                <div key={item.label} className="flex justify-between items-center bg-gray-50 rounded-lg px-3 py-2 shadow-sm border border-gray-100 mb-2 w-full max-w-xs mx-auto">
+                  <span className="text-base font-semibold text-[#002855]">{item.label}</span>
+                  <div className="flex space-x-4 font-semibold">
+                    <span className="text-red-500 flex items-center">
+                      <svg width="14" height="14" fill="currentColor" className="mr-1" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                      </svg>
+                      {item.max}
+                    </span>
+                    <span className="text-green-600 flex items-center">
+                      <svg width="14" height="14" fill="currentColor" className="mr-1" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      {item.min}
+                    </span>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
 
-      {/* Regional Data */}
-      <div id="regional" className="max-w-4xl mx-auto w-full">
+      {/* National Data & Generation Mix in one grid row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+        {/* National Data */}
+        <div id="national" className="w-full flex flex-col h-full">
+          <div className="flex flex-col h-full bg-white rounded-2xl shadow-2xl border border-[#e5e7eb] p-8 hover:shadow-primary/30 transition-shadow duration-200 justify-between">
+            <h2 className="text-2xl font-extrabold text-center mb-3 text-primary tracking-wide">National Data</h2>
+            <div className="text-center text-sm text-gray-500 mb-3">Forecast & Actual Carbon Intensity (7 days)</div>
+            <div className="flex-1 flex flex-col justify-center">
+              <div className="h-[380px] w-full rounded-2xl overflow-hidden bg-gray-50 flex items-center justify-center">
+                <iframe 
+                  key={forecastKey}
+                  src="/forecast.html" 
+                  className="w-full h-full"
+                  frameBorder="0"
+                  title="Carbon Forecast Chart"
+                  style={{ border: 'none', minHeight: '360px' }}
+                />
+              </div>
+            </div>
+            <div className="mt-3 text-xs text-gray-400 text-center">Orange: Actual | Blue: Forecast</div>
+          </div>
+        </div>
+
+        {/* Generation Mix */}
+        <div id="generation" className="w-full flex flex-col h-full">
+          <div className="flex flex-col h-full bg-white rounded-2xl shadow-2xl border border-[#e5e7eb] p-8 hover:shadow-primary/30 transition-shadow duration-200 justify-between">
+            <h2 className="text-2xl font-extrabold text-center mb-3 text-primary tracking-wide">Vietnam Power Sources</h2>
+            <div className="text-center text-sm text-gray-500 mb-3">Tỉ lệ nguồn phát điện hiện tại</div>
+            <div className="flex-1 flex flex-col justify-center">
+              <div className="h-[380px] w-full rounded-2xl overflow-hidden bg-gray-50 flex items-center justify-center">
+                <iframe 
+                  key={forecastKey}
+                  src="/power_sources.html" 
+                  className="w-full h-full"
+                  frameBorder="0"
+                  title="Power Sources Chart"
+                  style={{ border: 'none', minHeight: '360px' }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Regional Data - 2 columns: map left, table right, full width like above */}
+      <div id="regional" className="w-full">
         <h2 className="text-3xl font-bold text-center mb-6" style={{ color: '#002855' }}>Regional Data</h2>
-        <div className="bg-white p-6 rounded-lg shadow-lg">
+        <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#e5e7eb]">
           <p className="text-gray-600 text-center mb-6">
-            NESO provides forecasts of carbon intensity and generation mix across 14 geographical regions in Great Britain.
+            Our solution provides forecasts of carbon intensity and generation mix across 14 geographical regions in VietNam.
             Click on a region to view its current carbon intensity and generation mix, or use the play button to see a 24-hour forecast.
           </p>
-          
-          <div className="grid grid-cols-1 gap-8">
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold" style={{ color: '#002855' }}>Eastern International University</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start w-full">
+            {/* Map left */}
+            <div className="space-y-4 w-full">
+              <h3 className="text-xl font-semibold text-center" style={{ color: '#002855' }}>Eastern International University</h3>
               <div className="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg overflow-hidden">
                 <div id="eiu-map" className="w-full h-[400px] rounded-lg"></div>
               </div>
             </div>
-            
-            <div className="mt-6">
+            {/* Table right */}
+            <div className="mt-0 md:mt-6 w-full">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead>
@@ -557,29 +412,7 @@ const CarbonJourney = () => {
         </div>
       </div>
 
-      {/* Documentation */}
-      <div className="max-w-4xl mx-auto w-full">
-        <h2 className="text-3xl font-bold text-center mb-6" style={{ color: '#002855' }}>Documentation</h2>
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <p className="text-gray-600 mb-6">
-            Our API documentation provides comprehensive information about endpoints, data formats,
-            and example implementations. Whether you're building a mobile app, web service, or
-            integrating with smart home devices, you'll find everything you need to get started.
-          </p>
-          
-          <div className="flex justify-center">
-            <a 
-              href="https://carbon-intensity.github.io/api-definitions/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 text-white rounded-md"
-              style={{ backgroundColor: '#002855' }}
-            >
-              View API Documentation
-            </a>
-          </div>
-        </div>
-      </div>
+      
     </div>
     
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaHome, FaLayerGroup, FaChartLine, FaFileInvoiceDollar, FaSignOutAlt, FaTachometerAlt, FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -57,26 +57,29 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   };
 
   return (
-    <aside 
+    <aside
       style={{ overflow: 'visible' }}
-      className={`bg-white text-[#0B3D61] ${isCollapsed ? 'w-16' : 'w-48'} shadow-lg flex-shrink-0 flex flex-col fixed md:relative inset-y-0 left-0 z-40 transition-all duration-300 ease-in-out transform ${
+      className={`bg-gradient-to-b from-[#e0f7fa] via-[#e0ffe7] to-[#f8fafc] text-[#0B3D61] ${isCollapsed ? 'w-16' : 'w-56'} shadow-xl flex-shrink-0 flex flex-col fixed md:relative inset-y-0 left-0 z-40 transition-all duration-300 ease-in-out transform ${
         isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-      }`}
+      } border-r-2 border-[#b38e5d]/10`}
     >
-      <div className={`p-6 ${isCollapsed ? 'p-2 flex flex-col items-center justify-center relative' : ''}`}>
-        {!isCollapsed && (
-          <img
-            src="/assets/images/logo%20EIU.png"
-            alt="Company Logo"
-            className="h-32 w-auto max-w-full object-contain transition-all duration-300"
-            onError={(e) => {
-              console.error('Failed to load logo:', e);
-              const target = e.target as HTMLImageElement;
-              target.src = "https://placehold.co/150x50";
-            }}
-          />
-        )}
 
+      <div className={`p-4 ${isCollapsed ? 'p-2 flex flex-col items-center justify-center relative' : ''}`}>
+        {!isCollapsed && (
+          <div className="mb-2 pb-2 flex flex-col items-center">
+            <img
+              src="/assets/images/logo-15nam.png"
+              alt="EIU 15 Years Logo"
+              className="h-16 w-auto max-w-full object-contain mx-auto transition-all duration-300 drop-shadow-lg"
+              onError={(e) => {
+                console.error('Failed to load logo:', e);
+                const target = e.target as HTMLImageElement;
+                target.src = "https://placehold.co/250x70";
+              }}
+            />
+            <span className="mt-2 text-xs font-bold tracking-widest text-[#008080] uppercase">Green Energy</span>
+          </div>
+        )}
         {isCollapsed && (
           <button
             onClick={toggleCollapse}
@@ -102,8 +105,8 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         </div>
       </div>
       
-      <nav className="flex-1 py-2 overflow-visible">
-        <ul>
+      <nav className="flex-1 py-4 px-2 overflow-visible">
+        <ul className="space-y-2">
           {sidebarItems.map((item, index) => {
             const isActive = item.path === location.pathname || (item.submenu && item.submenu.some(subitem => subitem.path === location.pathname));
             const hasSubmenu = item.submenu && item.submenu.length > 0;
@@ -112,34 +115,28 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
             return (
               <li
                 key={index}
-                className="mb-0.5 relative group"
+                className="mb-1 relative group"
                 onMouseEnter={() => {
-                  if (isCollapsed) {
-                    setOpenSubmenu(index);
-                    console.log('Hovered:', item.name);
-                  }
+                  if (isCollapsed) setOpenSubmenu(index);
                 }}
                 onMouseLeave={() => {
-                  if (isCollapsed) {
-                    setOpenSubmenu(null);
-                    console.log('Unhovered:', item.name);
-                  }
+                  if (isCollapsed) setOpenSubmenu(null);
                 }}
               >
                 {hasSubmenu ? (
                   <>
                     <button
                       onClick={!isCollapsed ? () => toggleSubmenu(index) : undefined}
-                      className={`w-full flex items-center ${isCollapsed ? 'px-2 justify-center' : 'px-4'} py-2 text-[#0B3D61] hover:bg-[#0B3D61]/10 transition-colors ${
-                        isActive ? "bg-[#0B3D61]/10" : ""
+                      className={`w-full flex items-center ${isCollapsed ? 'px-2 justify-center' : 'px-5'} py-2 text-[#0B3D61] hover:scale-[1.04] hover:shadow-lg hover:bg-[#e0ffe7]/60 transition-all duration-200 rounded-2xl font-bold tracking-wider group relative ${
+                        isActive ? "bg-[#e0ffe7] shadow-lg border-l-8 border-[#22c55e]" : "border-l-8 border-transparent"
                       }`}
                     >
-                      <span className="inline-flex items-center justify-center h-6 w-6 text-lg text-[#0B3D61]">
+                      <span className={`inline-flex items-center justify-center h-9 w-9 text-xl ${isActive ? 'bg-[#22c55e]/20 text-[#22c55e] shadow' : 'bg-white text-[#0B3D61]'} rounded-full transition-all duration-200 border-2 border-[#e0f7fa]`}> 
                         {item.icon}
                       </span>
                       {!isCollapsed && (
                         <>
-                          <span className="ml-2 font-medium">{item.name}</span>
+                          <span className="ml-3 font-bold uppercase tracking-widest text-base">{item.name}</span>
                           <span className="ml-auto text-sm">
                             <svg 
                               xmlns="http://www.w3.org/2000/svg" 
@@ -163,7 +160,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
                             <li key={subIndex}>
                               <Link
                                 to={subitem.path}
-                                className="flex items-center px-3 py-2 text-[#0B3D61] hover:bg-[#0B3D61]/10 transition-colors rounded-md"
+                              className="flex items-center px-3 py-2 text-[#0B3D61] hover:bg-[#e6f0fa] transition-colors rounded-md"
                               >
                                 <span className="inline-flex items-center justify-center h-5 w-5 text-sm text-[#0B3D61]">
                                   {subitem.icon}
@@ -176,13 +173,13 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
                       </div>
                     )}
                     {!isCollapsed && isSubmenuOpen && (
-                      <ul className="pl-10 pr-1 py-1 bg-[#0B3D61]/5">
+                      <ul className="pl-10 pr-1 py-1 bg-[#e6f0fa]/60">
                         {item.submenu.map((subitem, subIndex) => (
                           <li key={subIndex} className="mb-0.5">
                             <Link 
                               to={subitem.path}
-                              className={`flex items-center px-3 py-1 text-[#0B3D61] hover:bg-[#0B3D61]/10 transition-colors rounded-md ${
-                                subitem.path === location.pathname ? "bg-[#0B3D61]/10" : ""
+                              className={`flex items-center px-3 py-1 text-[#0B3D61] hover:bg-[#e6f0fa] transition-colors rounded-md ${
+                                subitem.path === location.pathname ? "bg-[#e6f0fa]" : ""
                               }`}
                             >
                               <span className="inline-flex items-center justify-center h-5 w-5 text-sm text-[#0B3D61]">
@@ -199,14 +196,14 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
                   <>
                     <Link 
                       to={item.path}
-                      className={`flex items-center ${isCollapsed ? 'px-2 justify-center' : 'px-4'} py-2 text-[#0B3D61] hover:bg-[#0B3D61]/10 transition-colors ${
-                        item.path === location.pathname ? "bg-[#0B3D61]/10" : ""
+                      className={`flex items-center ${isCollapsed ? 'px-2 justify-center' : 'px-5'} py-2 text-[#0B3D61] hover:scale-[1.04] hover:shadow-lg hover:bg-[#e0ffe7]/60 transition-all duration-200 rounded-2xl font-bold tracking-wider group relative ${
+                        item.path === location.pathname ? "bg-[#e0ffe7] shadow-lg border-l-8 border-[#22c55e]" : "border-l-8 border-transparent"
                       }`}
                     >
-                      <span className="inline-flex items-center justify-center h-6 w-6 text-lg text-[#0B3D61]">
+                      <span className={`inline-flex items-center justify-center h-9 w-9 text-xl ${item.path === location.pathname ? 'bg-[#22c55e]/20 text-[#22c55e] shadow' : 'bg-white text-[#0B3D61]'} rounded-full transition-all duration-200 border-2 border-[#e0f7fa]`}>
                         {item.icon}
                       </span>
-                      {!isCollapsed && <span className="ml-2 font-medium">{item.name}</span>}
+                      {!isCollapsed && <span className="ml-3 font-bold uppercase tracking-widest text-base">{item.name}</span>}
                     </Link>
                     {/* Tooltip for collapsed sidebar, moved outside Link for group-hover to work */}
                     {isCollapsed && (
@@ -222,19 +219,122 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         </ul>
       </nav>
       
-      <div className="p-4 border-t border-gray-200">
+      {/* Cây động nhỏ gọn */}
+      <div className="flex justify-center items-center pb-2 pt-2">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <ellipse cx="30" cy="54" rx="20" ry="6" fill="#e6f4fb" />
+          <rect x="26" y="36" width="8" height="18" rx="4" fill="#B38E5D" />
+          <circle cx="30" cy="36" r="20" fill="#4CAF50" />
+        </svg>
+      </div>
+      <div className="p-4 border-t border-gray-200 mt-auto">
         <button 
           onClick={handleLogout}
-          className={`flex items-center ${isCollapsed ? 'px-3 justify-center' : 'px-6'} py-3 text-[#0B3D61] hover:bg-[#0B3D61]/10 rounded-lg transition-colors w-full`}
+          className={`flex items-center justify-center gap-2 py-3 text-white bg-gradient-to-r from-[#22c55e] to-[#008080] hover:from-[#008080] hover:to-[#22c55e] rounded-2xl font-bold text-base shadow-lg transition-all w-full`}
         >
-          <span className="inline-flex items-center justify-center h-8 w-8 text-lg text-[#0B3D61]">
+          <span className="inline-flex items-center justify-center h-8 w-8 text-lg">
             <FaSignOutAlt className="h-5 w-5" />
           </span>
-          {!isCollapsed && <span className="ml-3 font-medium">Logout</span>}
+          {!isCollapsed && <span className="ml-2 font-bold uppercase tracking-widest">Logout</span>}
         </button>
       </div>
     </aside>
   );
 };
 
+
 export default Sidebar;
+
+// Component SVG cây động và nhân vật tưới nước
+function WateringTree() {
+  const [level, setLevel] = useState(1); // 1: nhỏ, 2: vừa, 3: lớn
+  const [watering, setWatering] = useState(false);
+  const [characterX, setCharacterX] = useState(-80); // vị trí nhân vật (bắt đầu xa hơn)
+  const [direction, setDirection] = useState(1); // 1: sang phải, -1: sang trái
+
+  useEffect(() => {
+    let animId: ReturnType<typeof setTimeout> | undefined;
+    // Đi chậm hơn (tăng khoảng cách, giảm tốc độ)
+    if (characterX < 80 && direction === 1) {
+      animId = setTimeout(() => setCharacterX(x => x + 1), 24);
+    } else if (characterX > -80 && direction === -1) {
+      animId = setTimeout(() => setCharacterX(x => x - 1), 24);
+    } else if (characterX >= 80 && direction === 1) {
+      // Đến cây, tưới nước
+      setWatering(true);
+      setTimeout(() => {
+        setWatering(false);
+        setLevel(lv => (lv < 3 ? lv + 1 : 3));
+        setDirection(-1);
+      }, 1200);
+    } else if (characterX <= -80 && direction === -1) {
+      setTimeout(() => setDirection(1), 600);
+    }
+    return () => clearTimeout(animId);
+  }, [characterX, direction]);
+
+  useEffect(() => {
+    if (direction === 1 && characterX < 80) setCharacterX(x => x + 1);
+    if (direction === -1 && characterX > -80) setCharacterX(x => x - 1);
+  }, [direction]);
+
+  // SVG cây to hơn, style giống hình mẫu
+  const tree = [
+    // Level 1: cây nhỏ
+    <g key="1">
+      <ellipse cx="96" cy="180" rx="40" ry="12" fill="#e6f4fb" />
+      <rect x="86" y="120" width="20" height="60" rx="10" fill="#B38E5D" />
+      <circle cx="96" cy="120" r="48" fill="#4CAF50" />
+    </g>,
+    // Level 2: cây vừa
+    <g key="2">
+      <ellipse cx="96" cy="180" rx="48" ry="14" fill="#e6f4fb" />
+      <rect x="84" y="100" width="24" height="80" rx="12" fill="#B38E5D" />
+      <circle cx="96" cy="100" r="60" fill="#4CAF50" />
+    </g>,
+    // Level 3: cây lớn
+    <g key="3">
+      <ellipse cx="96" cy="180" rx="60" ry="18" fill="#e6f4fb" />
+      <rect x="80" y="60" width="32" height="120" rx="16" fill="#B38E5D" />
+      <circle cx="96" cy="60" r="80" fill="#4CAF50" />
+    </g>
+  ];
+
+  // SVG nhân vật góc nhìn ngang, đi chậm, thấy mặt
+  const character = (
+    <g style={{ transform: `translateX(${characterX}px)`, transition: 'transform 0.12s linear' }}>
+      {/* Thân */}
+      <ellipse cx="0" cy="170" rx="12" ry="18" fill="#0B3D61" />
+      {/* Đầu */}
+      <ellipse cx="0" cy="150" rx="13" ry="13" fill="#F9D7B5" stroke="#B38E5D" strokeWidth="2" />
+      {/* Mắt */}
+      <ellipse cx="-4" cy="148" rx="2" ry="2.5" fill="#222" />
+      <ellipse cx="4" cy="148" rx="2" ry="2.5" fill="#222" />
+      {/* Miệng */}
+      <path d="M-3 154 Q0 157 3 154" stroke="#B38E5D" strokeWidth="1.5" fill="none" />
+      {/* Tay */}
+      <rect x="-16" y="165" width="8" height="4" rx="2" fill="#F9D7B5" transform="rotate(-20 -16 165)" />
+      <rect x="8" y="165" width="8" height="4" rx="2" fill="#F9D7B5" transform="rotate(20 16 165)" />
+      {/* Bình tưới */}
+      <rect x="14" y="168" width="12" height="8" rx="4" fill="#81C784" />
+      <rect x="24" y="170" width="4" height="4" rx="2" fill="#B38E5D" />
+      {/* Nước */}
+      {watering && <ellipse cx="30" cy="180" rx="4" ry="10" fill="#2196F3" opacity="0.7" />}
+    </g>
+  );
+
+  return (
+    <div className="flex justify-center items-center pb-2 relative" style={{ minHeight: 220 }}>
+      <svg width="220" height="200" viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ zIndex: 1 }}>
+        {tree[level - 1]}
+        {character}
+      </svg>
+      <style>{`
+        @keyframes wiggle {
+          0%, 100% { transform: rotate(-2deg) scale(1); }
+          50% { transform: rotate(2deg) scale(1.04); }
+        }
+      `}</style>
+    </div>
+  );
+}

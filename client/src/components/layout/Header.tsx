@@ -15,9 +15,9 @@ import { Calendar } from "@/components/ui/calendar";
 
 const CARBON_SECTIONS = [
   { id: "about", label: "About" },
-  { id: "national", label: "National" },
-  { id: "generation", label: "Current GB Generation Mix" },
-  { id: "examples", label: "Examples" },
+  { id: "national", label: "National data" },
+  { id: "generation", label: "Vietnam Power Sources" },
+  // { id: "examples", label: "Examples" },
   { id: "regional", label: "Regional Data" }
 ];
 
@@ -120,27 +120,26 @@ const Header = ({
   };
 
   return (
-    <header className="bg-white shadow-sm z-10">
-      <div className="flex items-center justify-between p-4">
-        <div className="flex items-center gap-4">
+    <header className="bg-[#f4f8fb] shadow z-20 border-b border-[#e6f0fa]">
+      <div className="flex items-center justify-between px-6 py-3 min-h-[72px]">
+        <div className="flex items-center gap-6">
           {/* Dropdown ALL SITES */}
           <div className="relative">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button 
-                  className="flex items-center justify-between w-48 md:w-64 px-4 py-2" 
-                  style={{ backgroundColor: '#002855', color: 'white', borderRadius: '0.375rem' }}
+                <button
+                  className="flex items-center justify-between w-52 md:w-64 px-5 py-2 font-bold text-base uppercase bg-gradient-to-r from-[#43a047] via-[#388e3c] to-[#0B3D61] text-white rounded-full shadow-md hover:from-[#388e3c] hover:to-[#008080] transition-all duration-200 border-0 focus:outline-none focus:ring-2 focus:ring-[#43a047] focus:ring-offset-2"
                 >
-                  <span>{selectedSite}</span>
-                  <FaChevronDown className="ml-2 h-4 w-4" />
+                  <span className="truncate max-w-[120px] md:max-w-[180px] tracking-wide">{selectedSite}</span>
+                  <FaChevronDown className="ml-2 h-4 w-4 text-white" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48 md:w-64">
+              <DropdownMenuContent align="start" className="w-52 md:w-64 rounded-2xl shadow-lg border border-[#e6f0fa] bg-white py-2">
                 {siteOptions.map((site) => (
-                  <DropdownMenuItem 
-                    key={site.id} 
+                  <DropdownMenuItem
+                    key={site.id}
                     onClick={() => handleSiteSelect(site)}
-                    className="cursor-pointer hover:bg-gray-100"
+                    className="cursor-pointer hover:bg-[#e6fbe6] px-4 py-2 rounded-lg font-semibold text-base transition-all"
                   >
                     {site.name}
                   </DropdownMenuItem>
@@ -156,7 +155,7 @@ const Header = ({
                 <Button
                   key={section.id}
                   variant="ghost"
-                  className="hover:text-blue-700"
+                  className="hover:text-[#0B3D61] font-semibold text-base px-3 py-2 rounded-lg transition-all"
                   style={{ color: '#002855' }}
                   onClick={() => scrollToSection(section.id)}
                 >
@@ -168,13 +167,13 @@ const Header = ({
 
           {/* Date Filters - Chỉ hiển thị khi ở trang /meters */}
           {(location.pathname.startsWith("/meters") || location.pathname.startsWith("/billing-report")) && (
-            <div className="flex items-center gap-2 px-2 py-1 rounded">
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-[#e6f0fa] bg-[#f8fbfd] shadow-sm">
               {/* Date Popover: chỉ hiện ở /meters */}
               {location.pathname.startsWith("/meters") && (
                 <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" className="flex items-center gap-2">
-                      <FaCalendarAlt className="text-gray-600" />
+                    <Button variant="outline" className="flex items-center gap-2 font-medium text-base border-[#d1e3f8] hover:bg-[#e6f0fa]">
+                      <FaCalendarAlt className="text-[#0B3D61]" />
                       {date ? format(date, "yyyy-MM-dd") : "Select date"}
                       <span className="text-xs ml-2">Custom</span>
                     </Button>
@@ -198,8 +197,8 @@ const Header = ({
               {/* Month Popover: luôn hiện */}
               <Popover open={monthYearOpen} onOpenChange={setMonthYearOpen}>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <FaCalendarWeek className="text-gray-600" />
+                  <Button variant="outline" className="flex items-center gap-2 font-medium text-base border-[#d1e3f8] hover:bg-[#e6f0fa]">
+                    <FaCalendarWeek className="text-[#0B3D61]" />
                     {monthYear ? format(monthYear, "MMMM - yyyy") : "Select month"}
                   </Button>
                 </PopoverTrigger>
@@ -228,8 +227,8 @@ const Header = ({
               {/* Year Popover: luôn hiện */}
               <Popover open={yearOpen} onOpenChange={setYearOpen}>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <FaCalendar className="text-gray-600" />
+                  <Button variant="outline" className="flex items-center gap-2 font-medium text-base border-[#d1e3f8] hover:bg-[#e6f0fa]">
+                    <FaCalendar className="text-[#0B3D61]" />
                     {year ? format(year, "yyyy") : "Select year"}
                     <span className="text-xs ml-2">Year</span>
                   </Button>
@@ -260,20 +259,20 @@ const Header = ({
         </div>
 
         {/* Right side: Download button and user menu */}
-        <div className="flex items-center space-x-4">
-          <Button variant="outline" className="flex items-center gap-2">
-            <FaDownload className="text-gray-600" />
+        <div className="flex items-center gap-5">
+          <Button variant="outline" className="flex items-center gap-2 font-semibold text-base bg-white hover:bg-[#e6f0fa] text-[#0B3D61] shadow-sm px-5 py-2 rounded-xl transition-all border-0">
+            <FaDownload className="text-[#0B3D61]" />
             Download
           </Button>
-          <button className="text-gray-500 p-2 rounded-md hover:bg-gray-100 focus:outline-none">
+          <button className="text-[#0B3D61] p-2 rounded-full hover:bg-[#e6f0fa] focus:outline-none transition-all shadow-sm">
             <FaComments className="h-5 w-5" />
           </button>
           <div className="relative">
             <button 
-              className="flex items-center justify-center h-8 w-8 bg-amber-500 text-white rounded-full"
+              className="flex items-center justify-center h-10 w-10 bg-gradient-to-br from-[#fbbf24] to-[#f59e42] text-white rounded-full border-4 border-white shadow-lg hover:scale-105 transition-transform duration-150"
               onClick={() => navigate("/profile")}
             >
-              <span className="font-medium text-sm">BP</span>
+              <span className="font-bold text-base">AT</span>
             </button>
           </div>
         </div>

@@ -28,7 +28,8 @@ CSV_COLUMNS = [
     "ĐMT mái nhà (ước tính đầu cực)",
     "Nhập khẩu điện",
     "Khác (Sinh khối, Diesel Nam, …)",
-    "Carboon (tấn CO₂)"
+    "Carboon (tấn CO₂)",
+    "Total MWh"  # ⬅️ thêm dòng này vào cuối
 ]
 
 def normalize_day(day_str):
@@ -143,6 +144,31 @@ def append_to_csv(row_dict):
         if write_header:
             writer.writeheader()
         writer.writerow(full_row)
+    # Tính tổng thương phẩm (MWh) = tổng các nguồn có giá trị
+    GEN_SOURCES = [
+        "Thủy điện",
+        "Nhiệt điện than",
+        "Tuabin khí (Gas + Dầu DO)",
+        "Nhiệt điện dầu",
+        "Điện gió",
+        "ĐMT trang trại",
+        "ĐMT mái nhà (ước tính thương phẩm)",
+        "Nhập khẩu điện",
+        "Khác (Sinh khối, Diesel Nam, …)",
+    ]
+
+    def compute_total_mwh(row):
+        total = 0
+        for s in GEN_SOURCES:
+            v = row.get(s, 0)
+            if pd.isna(v):
+                continue
+            total += v
+        return round(total, 2)
+
+    # Lưu thêm total_mwh
+    full_row["Total MWh"] = compute_total_mwh(full_row)
+
 
 # --- Tải 1 ngày với retry ---
 async def fetch_day(session, date_obj, retries=3):

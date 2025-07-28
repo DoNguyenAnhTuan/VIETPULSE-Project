@@ -21,7 +21,7 @@ export const fetchSiteData = async (accessToken, siteId) => {
     return null;
   }
 };
-
+ 
 // Function to fetch consumption summary
 export const fetchSiteData_ConsumptionSummary = async (
   accessToken,
@@ -30,8 +30,10 @@ export const fetchSiteData_ConsumptionSummary = async (
   endDate
 ) => {
   try {
+    const targetSiteId = siteId === "all" ? "all" : siteId;
+
     const response = await fetch(
-      `${API_BASE_URL}/site-data/consumption-summary?siteId=${siteId}&startDate=${startDate}&endDate=${endDate}`,
+      `${API_BASE_URL}/site-data/consumption-summary?siteId=${targetSiteId}&startDate=${startDate}&endDate=${endDate}&resolution=day`,
       {
         method: 'GET',
         headers: {
@@ -46,13 +48,13 @@ export const fetchSiteData_ConsumptionSummary = async (
     }
 
     const data = await response.json();
-    // console.log("Consumption summary response:", data);
     return data;
   } catch (error) {
     console.error("Error fetching consumption summary:", error);
     return null;
   }
 };
+
 
 export const fetchCostConsumptionSummary = async (accessToken) => {
   try {

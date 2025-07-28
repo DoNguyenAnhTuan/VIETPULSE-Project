@@ -157,30 +157,29 @@ const MapCard = () => {
   }, []);
 
   return (
-    <Card className={`overflow-hidden ${isFullscreen ? 'fullscreen-card' : ''}`}>
-      <CardHeader className="p-4 border-b border-gray-200 flex flex-row justify-between items-center">
-        <CardTitle className="text-lg font-semibold text-gray-800">SITE LOCATIONS</CardTitle>
+    <Card className={`overflow-hidden rounded-2xl shadow-lg bg-white ${isFullscreen ? 'fullscreen-card' : ''}`}>
+      <CardHeader className="p-5 border-b border-[#f4f8fb] flex flex-row justify-between items-center bg-gradient-to-r from-[#f8fbfd] to-[#e6f0fa]">
+        <CardTitle className="text-xl font-bold text-[#0B3D61] tracking-wide">Site Locations</CardTitle>
         <button
           onClick={toggleFullscreen}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 bg-white border border-[#e6f0fa] shadow hover:bg-[#e6f0fa] rounded-xl transition-all"
           title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
         >
           {isFullscreen ? (
-            <FaCompress className="h-5 w-5 text-gray-600" />
+            <FaCompress className="h-5 w-5 text-[#0B3D61]" />
           ) : (
-            <FaExpand className="h-5 w-5 text-gray-600" />
+            <FaExpand className="h-5 w-5 text-[#0B3D61]" />
           )}
         </button>
       </CardHeader>
-      
       <CardContent className="p-0">
         <div 
-          className={`relative ${isFullscreen ? 'h-screen' : 'h-[300px]'} w-full`} 
+          className={`relative ${isFullscreen ? 'h-screen' : 'h-[320px]'} w-full transition-all duration-300`} 
           id="map-container"
         >
           <div 
             ref={mapRef} 
-            className="h-full w-full"
+            className="h-full w-full rounded-b-2xl border border-[#e6f0fa] shadow-sm"
           ></div>
         </div>
       </CardContent>
@@ -188,7 +187,8 @@ const MapCard = () => {
   );
 };
 
-// Add these styles to your CSS
+
+// Add these styles to your CSS (or global styles)
 const styles = `
 .fullscreen-card {
   position: fixed !important;
@@ -201,9 +201,19 @@ const styles = `
   max-width: none !important;
   border-radius: 0 !important;
 }
-
 .fullscreen-card .leaflet-container {
   height: calc(100vh - 60px) !important;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 1rem !important;
+  box-shadow: 0 4px 24px #0B3D6111 !important;
+  border: 1px solid #e6f0fa !important;
+}
+.leaflet-popup-content {
+  font-size: 1rem !important;
+  color: #0B3D61 !important;
+  font-weight: 600 !important;
+  text-align: center;
 }
 `;
 

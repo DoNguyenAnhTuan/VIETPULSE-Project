@@ -3,14 +3,14 @@ import json
 # Constants
 HOST = "https://admin.qenergy.ai"
 LOGIN_ENDPOINT = "/api/auth/login/"
-# SITE_ENDPOINT = "/api/site/consumption/profile/2025-01-01/2025-12-31"
+
 # SITE_ENDPOINT = "/api/environment/co2/intensity/2025-05-06T02:00:00.000+07:00/2025-05-06T09:00:00.000+07:00"
 # SITE_ENDPOINT="/api/site/712/carbon_emission_detail/2025"
-SITE_ENDPOINT="/api/site/712/cost_consumption_summary"
-# SITE_ENDPOINT="/api/site/712/consumption/profile/2025-05-15/2025-05-16?resolution=hour"
-SITE_ENDPOINT="api/site/all/overview_by_date/2025-05-15/2025-05-15"
+# SITE_ENDPOINT="/api/site/712/cost_consumption_summary"
+SITE_ENDPOINT="/api/site/all/consumption/profile/2025-07-25/2025-07-26?resolution=day"
+# SITE_ENDPOINT="api/site/all/overview_by_date/2025-05-15/2025-05-15"
 # ${HOST}/api/site/${siteId}/consumption/hourly/${date}
-#SITE_ENDPOINT = "/api/site/708/consumption/profile/2025-01-04/2025-01-05"
+# SITE_ENDPOINT = "/api/site/712/consumption/profile/2025-01-01/2025-12-01"
 
 # Step 1: Login and get access token
 def get_access_token():

@@ -72,39 +72,36 @@ async function fetchSiteData(accessToken, siteId) {
  * @param {string} startDate - The start date for the consumption data
  * @param {string} endDate - The end date for the consumption data
  * @returns {Promise<Array|null>} The consumption data or null if there was an error
- */
+ */ 
 async function fetchSiteData_ConsumptionSummary(accessToken, siteId, startDate, endDate) {
-    if (!siteId || siteId === "all") {
-        siteId = "712"; // Default to Block 11A if no site selected or ALL SITES
-    }
-    const siteUrl = `${HOST}/api/site/${siteId}/consumption/profile/${startDate}/${endDate}`;
+  const pathSegment = siteId === "all"
+    ? `all/consumption/profile/${startDate}/${endDate}`
+    : `${siteId}/consumption/profile/${startDate}/${endDate}`;
 
-    try {
-        const response = await fetch(siteUrl, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
-            }
-        });
+  const siteUrl = `${HOST}/api/site/${pathSegment}?resolution=day`;
 
-        if (response.ok) {
-            const data = await response.json();
-            if (Array.isArray(data) && data.length > 0) {
-                return data;
-            } else {
-                console.warn("Consumption Summary is empty or invalid:", data);
-                return null;
-            }
-        } else {
-            console.error("Error:", response.status, await response.text());
-            return null;
-        }
-    } catch (error) {
-        console.error("Error fetching site consumption summary:", error);
-        return null;
+  try {
+    const response = await fetch(siteUrl, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return Array.isArray(data) ? data : null;
+    } else {
+      console.error("Error:", response.status, await response.text());
+      return null;
     }
+  } catch (error) {
+    console.error("Error fetching site consumption summary:", error);
+    return null;
+  }
 }
+
 
 /**
  * @param {string} accessToken - The access token for authentication
@@ -199,4 +196,4 @@ async function main() {
 main();
 
 // Export the functions
-export { getAccessToken, fetchSiteData, fetchSiteData_ConsumptionSummary, fetchHourlyData, fetchCostConsumptionSummary };
+export { getAccessToken, fetchSiteData, fetchSiteData_ConsumptionSummary, fetchHourlyData, fetchCostConsumptionSummary  };

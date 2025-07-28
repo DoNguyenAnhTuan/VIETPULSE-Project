@@ -1,46 +1,30 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { FaLeaf, FaChartLine, FaGlobeAsia } from "react-icons/fa";
 
 const CarbonReportingCard = () => {
   return (
-    <Card className="overflow-hidden">
-      <CardHeader className="p-4 border-b border-gray-200">
-        <CardTitle className="text-lg font-semibold text-gray-800">CARBON REPORTING</CardTitle>
+    <Card className="overflow-hidden rounded-2xl shadow-lg bg-gradient-to-br from-[#e6fbe6] via-[#f8fafc] to-[#e6f4fb] border border-[#b6e5b6]/40">
+      <CardHeader className="p-5 border-b border-[#e6fbe6] bg-gradient-to-r from-[#e6fbe6] to-[#f8fafc]">
+        <CardTitle className="text-xl font-extrabold text-[#388e3c] tracking-wide uppercase">Carbon Reporting</CardTitle>
       </CardHeader>
-      
-      <CardContent className="p-6 flex flex-col items-center justify-center text-center h-[400px] md:h-[300px]">
-        <div className="mb-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="120"
-            height="120"
-            viewBox="0 0 200 200"
-            className="mx-auto"
-          >
-            <circle cx="100" cy="100" r="50" fill="#f0f0f0" />
-            <text x="100" y="105" textAnchor="middle" fontSize="20" fill="#6b21a8">CO2</text>
-            <g opacity="0.6">
-              <path d="M60,80 C60,40 140,40 140,80" stroke="#6b21a8" fill="none" strokeWidth="2" />
-              <path d="M70,70 C70,30 130,30 130,70" stroke="#6b21a8" fill="none" strokeWidth="2" />
-              <path d="M80,60 C80,20 120,20 120,60" stroke="#6b21a8" fill="none" strokeWidth="2" />
-            </g>
-            <g opacity="0.4">
-              <circle cx="50" cy="120" r="5" fill="#6b21a8" />
-              <circle cx="65" cy="130" r="5" fill="#6b21a8" />
-              <circle cx="80" cy="135" r="5" fill="#6b21a8" />
-              <circle cx="95" cy="140" r="5" fill="#6b21a8" />
-              <circle cx="110" cy="135" r="5" fill="#6b21a8" />
-              <circle cx="125" cy="130" r="5" fill="#6b21a8" />
-              <circle cx="140" cy="120" r="5" fill="#6b21a8" />
-            </g>
-          </svg>
+      <CardContent className="p-8 flex flex-col items-center justify-center text-center min-h-[320px]">
+        <div className="mb-6 flex flex-col items-center">
+          <span className="inline-flex items-center justify-center h-20 w-20 rounded-full bg-[#b6e5b6]/60 text-[#388e3c] text-5xl mb-2 shadow-md border-4 border-[#facc15]/30">
+            <FaLeaf />
+          </span>
+          <span className="text-lg font-bold text-[#388e3c] tracking-wide">Unlock Sustainability Insights</span>
         </div>
-        <h3 className="text-xl font-medium text-gray-700 mb-2">Carbon reporting not activated</h3>
-        <p className="text-sm text-gray-500 max-w-md mb-6">
-          You do not have access to this feature. Please contact us for consultation regarding your carbon emissions reduction and reporting.
-        </p>
-        <Button className="bg-[#B38E5D] hover:bg-opacity-80 text-white rounded-full border-0 shadow-sm">
-          CONTACT US
+        <ul className="mb-6 text-[#388e3c] text-base space-y-2 text-left max-w-md mx-auto font-medium">
+          <li className="flex items-center gap-2"><FaChartLine className="text-[#388e3c]" /> Track and reduce your carbon footprint</li>
+          <li className="flex items-center gap-2"><FaGlobeAsia className="text-[#b38e5d]" /> Meet ESG & compliance requirements</li>
+          <li className="flex items-center gap-2"><FaLeaf className="text-[#43a047]" /> Enhance your brand’s green reputation</li>
+        </ul>
+        {/* <div className="mb-4 text-gray-500 text-sm max-w-md mx-auto">
+          Activate carbon reporting to access detailed emissions analytics, automated reports, and actionable recommendations for your business.
+        </div> */}
+        <Button className="bg-gradient-to-r from-[#43a047] to-[#b38e5d] hover:from-[#b38e5d] hover:to-[#43a047] text-white rounded-full border-0 shadow font-bold px-8 py-2 text-base mt-2 uppercase tracking-widest">
+          Contact Us to Enable
         </Button>
       </CardContent>
     </Card>
