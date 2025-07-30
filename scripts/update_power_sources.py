@@ -62,7 +62,7 @@ def update_power_sources():
         # Tiêu đề và layout
         fig.update_layout(
             title={
-                'text': "Vietnam Power Sources",
+                # 'text': "Vietnam Power Sources",
                 'y':0.95,
                 'x':0.5,
                 'xanchor': 'center',

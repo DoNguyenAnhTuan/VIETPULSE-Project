@@ -64,20 +64,20 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       } border-r-2 border-[#b38e5d]/10`}
     >
 
-      <div className={`p-4 ${isCollapsed ? 'p-2 flex flex-col items-center justify-center relative' : ''}`}>
+      <div className={`p-3 ${isCollapsed ? 'p-2 flex flex-col items-center justify-center relative' : ''}`}>
         {!isCollapsed && (
-          <div className="mb-2 pb-2 flex flex-col items-center">
+          <div className="mb-1 pb-1 flex flex-col items-center">
             <img
               src="/assets/images/logo-15nam.png"
               alt="EIU 15 Years Logo"
-              className="h-16 w-auto max-w-full object-contain mx-auto transition-all duration-300 drop-shadow-lg"
+              className="h-24 w-auto max-w-full object-contain mx-auto transition-all duration-300 drop-shadow-lg"
               onError={(e) => {
                 console.error('Failed to load logo:', e);
                 const target = e.target as HTMLImageElement;
                 target.src = "https://placehold.co/250x70";
               }}
             />
-            <span className="mt-2 text-xs font-bold tracking-widest text-[#008080] uppercase">Green Energy</span>
+            {/* <span className="mt-2 text-xs font-bold tracking-widest text-[#008080] uppercase">Green Energy</span> */}
           </div>
         )}
         {isCollapsed && (
@@ -100,7 +100,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         </button>
       )}
 
-      <div className="pt-0 pb-4 px-4 flex items-center justify-between border-b border-sidebar-border">
+      <div className="pt-0 pb-0 px-0 flex items-center justify-between border-b border-sidebar-border">
         <div className="flex items-center space-x-2">
         </div>
       </div>
