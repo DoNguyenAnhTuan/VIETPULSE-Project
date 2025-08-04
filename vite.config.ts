@@ -38,4 +38,11 @@ export default defineConfig({
   emptyOutDir: true,
   },
 
+/// thêm mới
+  server: {
+    watch: {
+      ignored: ['**/public/forecast.html'], //  Bỏ qua thư mục public/forecast.html khỏi HMR
+    },
+  },
+/// thêm mới
 });

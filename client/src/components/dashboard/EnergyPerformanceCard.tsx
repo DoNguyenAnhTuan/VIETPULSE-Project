@@ -43,9 +43,12 @@ const EnergyPerformanceCard = ({ selectedSite }: EnergyPerformanceCardProps) => 
   // Set global value for CarbonJourney
   useEffect(() => {
     if (data && typeof window !== 'undefined') {
-      window.energyTotalConsumptionMWh = (data.total_consumption / 1000).toFixed(2);
+      const consumptionMWh = (data.total_consumption / 1000).toFixed(2);
+      window.energyTotalConsumptionMWh = consumptionMWh;
+      sessionStorage.setItem("energyTotalConsumptionMWh", consumptionMWh); // 
     }
   }, [data]);
+
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {

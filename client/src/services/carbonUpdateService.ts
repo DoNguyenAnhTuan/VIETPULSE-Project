@@ -3,7 +3,7 @@ class CarbonUpdateService {
   private updateInterval: NodeJS.Timeout | null = null;
   private readonly UPDATE_INTERVAL = 6 * 60 * 60 * 1000; // 6 hours check lai ngay moi
   private readonly API_URL = 'http://localhost:3000/api/update-carbon-data';
-  private readonly TIMEOUT = 5 * 60 *60* 1000; // 5 minutes timeout update lai du lieu csv
+  private readonly TIMEOUT = 24 * 60 *60* 1000; // 5 minutes timeout update lai du lieu csv
 
   async start() {
     if (this.isRunning) {

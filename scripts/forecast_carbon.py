@@ -8,10 +8,15 @@ from datetime import timedelta
 import os
 
 # Đường dẫn file CSV
-CSV_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client', 'src', 'data', 'electric_async.csv')
+CSV_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client', 'src', 'data', 'electric_async1.csv')
 
 # Đọc dữ liệu
-df = pd.read_csv(CSV_PATH)
+# df = pd.read_csv(CSV_PATH)
+df = pd.read_csv(CSV_PATH, on_bad_lines='skip')  # pandas >= 1.3
+
+# Hoặc:
+# df = pd.read_csv(CSV_PATH, on_bad_lines='skip')  # pandas >= 1.3
+
 df["Day"] = pd.to_datetime(df["Day"], format="%Y-%m-%d")
 
 # Sắp xếp theo ngày

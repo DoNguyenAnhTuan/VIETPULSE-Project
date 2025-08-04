@@ -370,9 +370,16 @@ const CarbonJourney = () => {
             className="text-5xl font-extrabold mb-2 mt-2 flex items-end justify-center"
             style={{ color: '#B38E5D', minHeight: '56px' }}
           >
-            {typeof window !== 'undefined' && window.energyTotalConsumptionMWh
+            {/* {typeof window !== 'undefined' && window.energyTotalConsumptionMWh
               ? (parseFloat(window.energyTotalConsumptionMWh) * 0.6592).toFixed(2)
-              : '...'}
+              : '...'} */}
+            {(() => {
+              if (typeof window === 'undefined') return '...';
+
+              const consumption = window.energyTotalConsumptionMWh || sessionStorage.getItem("energyTotalConsumptionMWh");
+              return consumption ? (parseFloat(consumption) * 0.6592).toFixed(2) : '...';
+            })()}
+
             <span className="text-xl font-medium text-gray-700 ml-2 mb-1">gCO₂/kWh</span>
           </h2>
           <div className="text-gray-500 text-sm mt-2 text-center">

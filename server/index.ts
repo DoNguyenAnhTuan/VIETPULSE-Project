@@ -39,7 +39,8 @@ const runPythonScript = async (scriptPath: string) => {
 const updateAllData = async () => {
   try {
     // Chạy các script cập nhật dữ liệu
-    await runPythonScript(path.join(__dirname, '../scripts/update_carbon.py'));
+    // await runPythonScript(path.join(__dirname, '../scripts/update_carbon.py'));
+    await runPythonScript(path.join(__dirname, '../scripts/daily_update.py'));
     await runPythonScript(path.join(__dirname, '../scripts/forecast_carbon.py'));
     
     // Chạy script cập nhật nguồn điện trong background
