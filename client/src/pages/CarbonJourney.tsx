@@ -48,7 +48,7 @@ const CarbonJourney = () => {
   useEffect(() => {
     const fetchForecastData = async () => {
       try {
-        const response = await fetch('/carbon_forecast.json'); // Đúng file ở public
+        const response = await fetch('/carbon_forecast1.json'); // Đúng file ở public
         const data = await response.json();
         setForecastData(data);
       } catch (error) {

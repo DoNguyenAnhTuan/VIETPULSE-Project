@@ -4,12 +4,14 @@ import json
 from datetime import datetime
 import calendar
 
-CSV_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client', 'src', 'data', 'electric_async.csv')
-OUT_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client', 'public', 'carbon_forecast.json')
+CSV_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client', 'src', 'data', 'electric_async1.csv')
+OUT_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client', 'public', 'carbon_forecast1.json')
 
 # Đọc dữ liệu
 try:
-    df = pd.read_csv(CSV_PATH)
+    # df = pd.read_csv(CSV_PATH)
+    df = pd.read_csv(CSV_PATH, on_bad_lines="skip", engine="python")
+
     df['Day'] = pd.to_datetime(df['Day'], format='%Y-%m-%d', errors='coerce')
     df = df.dropna(subset=['Day'])
     print(df.head())
