@@ -107,123 +107,123 @@ const CarbonJourney = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    if (!mapRef.current) {
-      // Initialize map centered at Eastern International University
-      const map = L.map('eiu-map').setView([11.0526552, 106.6665097], 16);
+  // useEffect(() => {
+  //   if (!mapRef.current) {
+  //     // Initialize map centered at Eastern International University
+  //     const map = L.map('eiu-map').setView([11.0526552, 106.6665097], 16);
       
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(map);
+  //     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  //       attribution: '© OpenStreetMap contributors'
+  //     }).addTo(map);
 
-      // Create custom icon
-      const customIcon = L.divIcon({
-        className: 'custom-div-icon',
-        html: `
-          <div style="
-            background-color: #0B3D61;
-            width: 30px;
-            height: 40px;
-            position: relative;
-            border-radius: 8px 8px 24px 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          ">
-            <div style="
-              color: white;
-              font-size: 16px;
-              margin-top: -4px;
-            ">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="white">
-                <path d="M1 11V3C1 1.9 1.9 1 3 1h8v10H1zm2-8v6h6V3H3zM13 1h8c1.1 0 2 .9 2 2v8H13V1zm2 8h6V3h-6v6zM1 21c0-1.1.9-2 2-2h8v-6h10v6c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2z"/>
-              </svg>
-            </div>
-            <div style="
-              width: 10px;
-              height: 10px;
-              background-color: #4ADE80;
-              border-radius: 50%;
-              position: absolute;
-              top: -2px;
-              right: -2px;
-              border: 2px solid white;
-            "></div>
-          </div>
-        `,
-        iconSize: [30, 40],
-        iconAnchor: [15, 40],
-        popupAnchor: [0, -40]
-      });
+  //     // Create custom icon
+  //     const customIcon = L.divIcon({
+  //       className: 'custom-div-icon',
+  //       html: `
+  //         <div style="
+  //           background-color: #0B3D61;
+  //           width: 30px;
+  //           height: 40px;
+  //           position: relative;
+  //           border-radius: 8px 8px 24px 24px;
+  //           display: flex;
+  //           justify-content: center;
+  //           align-items: center;
+  //         ">
+  //           <div style="
+  //             color: white;
+  //             font-size: 16px;
+  //             margin-top: -4px;
+  //           ">
+  //             <svg viewBox="0 0 24 24" width="16" height="16" fill="white">
+  //               <path d="M1 11V3C1 1.9 1.9 1 3 1h8v10H1zm2-8v6h6V3H3zM13 1h8c1.1 0 2 .9 2 2v8H13V1zm2 8h6V3h-6v6zM1 21c0-1.1.9-2 2-2h8v-6h10v6c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2z"/>
+  //             </svg>
+  //           </div>
+  //           <div style="
+  //             width: 10px;
+  //             height: 10px;
+  //             background-color: #4ADE80;
+  //             border-radius: 50%;
+  //             position: absolute;
+  //             top: -2px;
+  //             right: -2px;
+  //             border: 2px solid white;
+  //           "></div>
+  //         </div>
+  //       `,
+  //       iconSize: [30, 40],
+  //       iconAnchor: [15, 40],
+  //       popupAnchor: [0, -40]
+  //     });
 
-      // Add markers for EIU locations
-      const locations = [
-        { 
-          latitude: 11.0540552,
-          longitude: 106.6663097,
-          name: "B11"
-        },
-        { 
-          latitude: 11.0544552,
-          longitude: 106.6660097,
-          name: "B8"
-        },
-        {
-          latitude: 11.0523552,
-          longitude: 106.6680097,
-          name: "B3"
-        },
-        {
-          latitude: 11.0519552,
-          longitude: 106.6680097,
-          name: "B6"
-        },
-        {
-          latitude: 11.0537552,
-          longitude: 106.6655097,
-          name: "B10"
-        },
-        {
-          latitude: 11.0536552,
-          longitude: 106.6672097,
-          name: "B4"
-        },
-        {
-          latitude: 11.0535552,
-          longitude: 106.6679097,
-          name: "B5"
-        },
-        {
-          latitude: 11.0550552,
-          longitude: 106.6670097,
-          name: "Canteen"
-        },
-        {
-          latitude: 11.0498552,
-          longitude: 106.6678097,
-          name: "AMC"
-        },
-      ];
+  //     // Add markers for EIU locations
+  //     const locations = [
+  //       { 
+  //         latitude: 11.0540552,
+  //         longitude: 106.6663097,
+  //         name: "B11"
+  //       },
+  //       { 
+  //         latitude: 11.0544552,
+  //         longitude: 106.6660097,
+  //         name: "B8"
+  //       },
+  //       {
+  //         latitude: 11.0523552,
+  //         longitude: 106.6680097,
+  //         name: "B3"
+  //       },
+  //       {
+  //         latitude: 11.0519552,
+  //         longitude: 106.6680097,
+  //         name: "B6"
+  //       },
+  //       {
+  //         latitude: 11.0537552,
+  //         longitude: 106.6655097,
+  //         name: "B10"
+  //       },
+  //       {
+  //         latitude: 11.0536552,
+  //         longitude: 106.6672097,
+  //         name: "B4"
+  //       },
+  //       {
+  //         latitude: 11.0535552,
+  //         longitude: 106.6679097,
+  //         name: "B5"
+  //       },
+  //       {
+  //         latitude: 11.0550552,
+  //         longitude: 106.6670097,
+  //         name: "Canteen"
+  //       },
+  //       {
+  //         latitude: 11.0498552,
+  //         longitude: 106.6678097,
+  //         name: "AMC"
+  //       },
+  //     ];
 
-      // Add markers for all locations
-      locations.forEach((location) => {
-        L.marker([location.latitude, location.longitude], {
-          icon: customIcon
-        })
-          .addTo(map)
-          .bindPopup(`<b>Building ${location.name}</b>`);
-      });
+  //     // Add markers for all locations
+  //     locations.forEach((location) => {
+  //       L.marker([location.latitude, location.longitude], {
+  //         icon: customIcon
+  //       })
+  //         .addTo(map)
+  //         .bindPopup(`<b>Building ${location.name}</b>`);
+  //     });
 
-      mapRef.current = map;
-    }
+  //     mapRef.current = map;
+  //   }
 
-    return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
-      }
-    };
-  }, []);
+  //   return () => {
+  //     if (mapRef.current) {
+  //       mapRef.current.remove();
+  //       mapRef.current = null;
+  //     }
+  //   };
+  // }, []);
   
 
   return (
@@ -605,12 +605,13 @@ const CarbonJourney = () => {
               <div className="h-[380px] w-full rounded-2xl overflow-hidden bg-gray-50 flex items-center justify-center">
                 <iframe
                   key={forecastKey}
-                  src="/forecast.html"
+                  src="forecast.html"
                   className="w-full h-full"
                   frameBorder="0"
                   title="Carbon Forecast Chart"
                   style={{ border: 'none', minHeight: '360px' }}
                 />
+                
               </div>
             </div>
             <div className="mt-3 text-xs text-gray-400 text-center">
@@ -812,23 +813,23 @@ const CarbonJourney = () => {
       </div>
 
       {/* Regional Data - 2 columns: map left, table right, full width like above */}
-      <div id="regional" className="w-full">
+      {/* <div id="regional" className="w-full">
         <h2 className="text-3xl font-bold text-center mb-6" style={{ color: '#002855' }}>Regional Data</h2>
         <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#e5e7eb]">
           <p className="text-gray-600 text-center mb-6">
             Our solution provides forecasts of carbon intensity and generation mix across 14 geographical regions in VietNam.
             Click on a region to view its current carbon intensity and generation mix, or use the play button to see a 24-hour forecast.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start w-full">
-            {/* Map left */}
-            <div className="space-y-4 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start w-full"> */}
+           
+            {/* <div className="space-y-4 w-full">
               <h3 className="text-xl font-semibold text-center" style={{ color: '#002855' }}>Eastern International University</h3>
               <div className="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg overflow-hidden">
                 <div id="eiu-map" className="w-full h-[400px] rounded-lg"></div>
               </div>
-            </div>
-            {/* Table right */}
-            <div className="mt-0 md:mt-6 w-full">
+            </div> */}
+            
+            {/* <div className="mt-0 md:mt-6 w-full">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead>
@@ -889,7 +890,7 @@ const CarbonJourney = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       
     </div>

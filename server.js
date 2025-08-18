@@ -9,13 +9,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+app.use((req, res, next) => {
+  console.log(` ${req.method} ${req.url}`);
+  next();
+});
 
 // Chạy script min/max khi server khởi động
 const minMaxScript = path.join(__dirname, 'scripts', 'min_max_last_3months.py');
 let minMaxOptions = {
   mode: 'text',
   pythonPath: 'python',
-  pythonOptions: ['-u'],
+  pythonOptions: ['-u', '-X', 'utf8'],
   scriptPath: path.dirname(minMaxScript),
 };
 
@@ -29,6 +33,13 @@ PythonShell.run('min_max_last_3months.py', minMaxOptions)
 
 app.use(cors());
 app.use(express.json());
+
+// Phục vụ static_html rõ ràng, và dừng tại đây
+app.get('/static_html/:file', (req, res) => {
+  const filePath = path.join(__dirname, 'client', 'static_html', req.params.file);
+  res.sendFile(filePath);
+});
+
 
 // Serve static files from the client/dist directory
 app.use(express.static(path.join(__dirname, 'client', 'dist')));
@@ -102,8 +113,13 @@ app.post('/api/update-carbon-data', async (req, res) => {
   }
 });
 
-// Handle all other routes - Important for client-side routing
-app.get('*', (req, res) => {
+
+
+
+// CHỈ để lại dòng fallback sau cùng — KHÔNG cần if
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/static_html/')) {
+    return res.sendFile(path.join(__dirname, 'client', req.path)); // TRẢ LUÔN FILE STATIC
+  }
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
-

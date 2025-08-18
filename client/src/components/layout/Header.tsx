@@ -66,7 +66,8 @@ const Header = ({
   const location = useLocation();
   const [showOldPassword, setShowOldPassword] = useState(false);
   const navigate = useNavigate();
-  const isCarbon = location.pathname === "/carbon-journey";
+  const isCarbon = location.pathname.includes("/carbon-journey");
+
 
   // Manual site options
   const siteOptions = [
@@ -124,29 +125,30 @@ const Header = ({
       <div className="flex items-center justify-between px-6 py-3 min-h-[72px]">
         <div className="flex items-center gap-6">
           {/* Dropdown ALL SITES */}
-          <div className="relative">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className="flex items-center justify-between w-52 md:w-64 px-5 py-2 font-bold text-base uppercase bg-gradient-to-r from-[#43a047] via-[#388e3c] to-[#0B3D61] text-white rounded-full shadow-md hover:from-[#388e3c] hover:to-[#008080] transition-all duration-200 border-0 focus:outline-none focus:ring-2 focus:ring-[#43a047] focus:ring-offset-2"
-                >
-                  <span className="truncate max-w-[120px] md:max-w-[180px] tracking-wide">{selectedSite}</span>
-                  <FaChevronDown className="ml-2 h-4 w-4 text-white" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-52 md:w-64 rounded-2xl shadow-lg border border-[#e6f0fa] bg-white py-2">
-                {siteOptions.map((site) => (
-                  <DropdownMenuItem
-                    key={site.id}
-                    onClick={() => handleSiteSelect(site)}
-                    className="cursor-pointer hover:bg-[#e6fbe6] px-4 py-2 rounded-lg font-semibold text-base transition-all"
-                  >
-                    {site.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          {!isCarbon && (
+            <div className="relative">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center justify-between w-52 md:w-64 px-5 py-2 font-bold text-base uppercase bg-gradient-to-r from-[#43a047] via-[#388e3c] to-[#0B3D61] text-white rounded-full shadow-md hover:from-[#388e3c] hover:to-[#008080] transition-all duration-200 border-0 focus:outline-none focus:ring-2 focus:ring-[#43a047] focus:ring-offset-2">
+                    <span className="truncate max-w-[120px] md:max-w-[180px] tracking-wide">{selectedSite}</span>
+                    <FaChevronDown className="ml-2 h-4 w-4 text-white" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-52 md:w-64 rounded-2xl shadow-lg border border-[#e6f0fa] bg-white py-2">
+                  {siteOptions.map((site) => (
+                    <DropdownMenuItem
+                      key={site.id}
+                      onClick={() => handleSiteSelect(site)}
+                      className="cursor-pointer hover:bg-[#e6fbe6] px-4 py-2 rounded-lg font-semibold text-base transition-all"
+                    >
+                      {site.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )}
+
 
           {/* Navigation buttons - Only show on CarbonJourney page */}
           {isCarbon && (

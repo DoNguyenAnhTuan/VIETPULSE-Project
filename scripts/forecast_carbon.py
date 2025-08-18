@@ -5,10 +5,14 @@ from xgboost import XGBRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, r2_score
 from datetime import timedelta
+import warnings
 import os
+# Ẩn cảnh báo FutureWarning của plotly/pandas
+warnings.filterwarnings("ignore", category=FutureWarning, module="_plotly_utils.basevalidators")
 
 # Đường dẫn file CSV
-CSV_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client', 'src', 'data', 'electric_async1.csv')
+ROOT = os.path.dirname(os.path.dirname(__file__))  # .../carbon_eiu1-main
+CSV_PATH = os.path.join(ROOT, "client", "src", "data", "electric_async1.csv")
 
 # Đọc dữ liệu
 # df = pd.read_csv(CSV_PATH)
@@ -119,7 +123,8 @@ fig.update_layout(
 )
 
 # Lưu biểu đồ dưới dạng HTML
-output_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client', 'public', 'forecast.html')
+output_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'public', 'forecast.html')
+
 html_str = fig.to_html()
 with open(output_path, "w", encoding="utf-8") as f:
     f.write(html_str)

@@ -1,9 +1,12 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet,useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { useState } from 'react';
 
 const Layout = () => {
+
+  const location = useLocation(); // Lấy đường dẫn hiện tại
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedSite, setSelectedSite] = useState("ALL SITES");
   const [selectedSiteId, setSelectedSiteId] = useState("all");
@@ -14,9 +17,14 @@ const Layout = () => {
   const [monthYearOpen, setMonthYearOpen] = useState(false);
   const [yearOpen, setYearOpen] = useState(false);
 
+  // Những route không muốn hiển thị Sidebar
+  const hideSidebarRoutes = ["/carbon-journey"];
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+      {/* Chỉ render Sidebar nếu route không nằm trong hideSidebarRoutes */}
+      {!hideSidebarRoutes.includes(location.pathname) && (
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+      )}
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header 
           toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -44,4 +52,4 @@ const Layout = () => {
   );
 };
 
-export default Layout; 
+export default Layout;

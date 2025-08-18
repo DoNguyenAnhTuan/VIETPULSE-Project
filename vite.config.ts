@@ -29,20 +29,16 @@ export default defineConfig({
     },
   },
   root: path.resolve(__dirname, "client"),
-  // build: {
-  //   outDir: path.resolve(__dirname, "dist/public"),
-  //   emptyOutDir: true,
-  // },
+
   build: {
-  outDir: path.resolve(__dirname, "dist"),
-  emptyOutDir: true,
+    outDir: path.resolve(__dirname, "dist"),
+    emptyOutDir: true,
   },
 
-/// thêm mới
+  // IGNORE toàn bộ thư mục static_html khỏi HMR
   server: {
     watch: {
-      ignored: ['**/public/forecast.html'], //  Bỏ qua thư mục public/forecast.html khỏi HMR
+      ignored: ['**/static_html/**'],
     },
   },
-/// thêm mới
 });
